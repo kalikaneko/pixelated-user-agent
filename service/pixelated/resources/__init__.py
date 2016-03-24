@@ -65,8 +65,18 @@ def get_public_static_folder():
     return os.path.join(_get_static_folder(), 'public')
 
 
+static_folder = None
+
+def set_static_folder(path):
+    global static_folder
+    static_folder = path
+
+
 def _get_static_folder():
-    static_folder = os.path.abspath(os.path.join(os.path.abspath(__file__), "..", "..", "..", "..", "web-ui", "dist"))
+    global static_folder
+    if not static_folder:
+        static_folder = os.path.abspath(
+            os.path.join(os.path.abspath(__file__), "..", "..", "..", "..", "web-ui", "dist"))
     if not os.path.exists(static_folder):
         static_folder = os.path.join('/', 'usr', 'share', 'pixelated-user-agent')
     return static_folder
